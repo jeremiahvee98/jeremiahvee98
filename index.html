@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>August Nail Appointment Bookings</title>
+    <meta name="description" content="Book your nail appointments for August.">
+    <style>
+        body {
+            font-family: Arial, sans-serif, 'Courier New', monospace;
+            background-color: #0ec921ed;
+            text-align: center;
+            font-size: 20px;
+            margin: 0;
+            padding: 50px;
+            background:  linear-gradient(rgba(248, 225, 225, 0.795), rgba(255, 192, 203, 0.997)), url('https://source.unsplash.com/1600x900/?nails,salon');
+            background-size: cover;
+            background-position: center;
+        }
+        h1 {
+            font-size: 2rem;
+            font-family: 'Pacifico', cursive;
+            margin: 0;
+            padding: 0;
+            color: #e888d4;
+        }
+        .message {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 20px;
+        }
+        h1:hover {
+            color: #eb7373e4;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.279);
+            display: inline-block;
+            text-align: left;
+            width: 100%;
+            max-width: 600px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #cc0a92;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #a00773;
+        }
+        #cancelForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(197, 81, 81, 0.279);
+            width: 100%;
+            max-width: 600px;
+        }
+        #cancelForm h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #cc0a92;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>August Nail Appointment Bookings</h1>
+    
+    <div id="responseMessage" class="message"></div>
+    
+    <script>
+        function displayMessage(status) {
+            let messageDiv = document.getElementById("responseMessage");
+            if (status === "success") {
+                messageDiv.innerHTML = "Your appointment has been successfully booked!";
+                messageDiv.style.color = "green";
+            } else if (status === "incomplete") {
+                messageDiv.innerHTML = "Your appointment booking is incomplete. Please fill in all required details.";
+                messageDiv.style.color = "red";
+            } else if (status === "reminder") {
+                messageDiv.innerHTML = "Reminder: Your nail appointment is coming up soon!";
+                messageDiv.style.color = "blue";
+            }
+        }
+
+        // Example usage:
+        // displayMessage("success");
+        // displayMessage("incomplete");
+        // displayMessage("reminder");
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="date">Preferred Date:</label>
+            <input type="date" id="date" name="date" required>
+            
+            <label for="time">Preferred Time:</label>
+            <input type="time" id="time" name="time" required>
+            
+            <label for="service">Service:</label>
+            <select id="service" name="service" required>
+                <option value="manicure">Manicure</option>
+                <option value="pedicure">Pedicure</option>
+                <option value="fullset">Full Set</option>
+                <option value="fill">Fill</option>
+                <option value="buff & shine">buff & shine</option>
+                <option value="gel manicure">Gel Manicure</option>
+                <option value="gel pedicure">Gel Pedicure</option>
+                <option value="acrylic nails">Acrylic Nails</option>
+                <option value="dip powder nails">Dip Powder Nails</option>
+                <option value="nailart">Nail Art</option>
+                <option value="nail repair">Nail Repair</option>
+                <option value="nail removal">Nail Removal</option>
+                <option value="other">Other</option>
+            </select>
+            <button type="submit">Book Appointment</button>
+        </form>
+
+        <form id="cancelForm">
+            <h2>Cancel Appointment</h2>
+            <label for="cancelEmail">Email:</label>
+            <input type="email" id="cancelEmail" name="cancelEmail" required>
+            <label for="cancelPhone">Phone Number:</label>
+            <input type="tel" id="cancelPhone" name="cancelPhone" required>
+            <button type="submit">Cancel Appointment</button>
+        </form>
+    </div>
+
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            displayMessage("success");
+            sendEmailNotification();
+        });
+
+        function sendEmailNotification() {
+            const email = document.getElementById("email").value;
+            const name = document.getElementById("name").value;
+            const date = document.getElementById("date").value;
+            const time = document.getElementById("time").value;
+            const service = document.getElementById("service").value;
+
+            const emailBody = `Hello ${name},\n\nYour appointment for a ${service} on ${date} at ${time} has been successfully booked.\n\nThank you!`;
+
+            window.location.href = `mailto:${email}?subject=Appointment Confirmation&body=${encodeURIComponent(emailBody)}`;
+        }
+    </script>
+    <script>
+        function sendDefaultNotification() {
+            const myEmail = "jeremiahvee@icloud.com";
+            const myPhone = "0822578119";
+            const emailBody = "A new appointment has been booked. Please check the appointment details.";
+
+            window.location.href = `mailto:${myEmail}?subject=New Appointment Notification&body=${encodeURIComponent(emailBody)}`;
+        }
+
+        document.querySelector("form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            displayMessage("success");
+            sendEmailNotification();
+            sendDefaultNotification();
+        });
+    </script>
+    <script>
+        document.getElementById("cancelForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            sendCancellationNotification();
+        });
+
+        function sendCancellationNotification() {
+            const email = document.getElementById("cancelEmail").value;
+            const phone = document.getElementById("cancelPhone").value;
+
+            const emailBody = `Hello,\n\nYour appointment has been successfully cancelled.\n\nThank you!`;
+            const techEmailBody = `A client has cancelled their appointment. Please check the details.`;
+
+            // Notify client via email
+            window.location.href = `mailto:${email}?subject=Appointment Cancellation&body=${encodeURIComponent(emailBody)}`;
+
+            // Notify nail tech via email
+            const techEmail = "jeremiahvee@icloud.com";
+            window.location.href = `mailto:${techEmail}?subject=Appointment Cancellation&body=${encodeURIComponent(techEmailBody)}`;
+
+            // Notify client via SMS (this requires a backend service to send SMS)
+            // Example using a hypothetical sendSMS function
+            // sendSMS(phone, "Your appointment has been successfully cancelled.");
+
+            // Notify nail tech via SMS
+            const techPhone = "0822578119";
+            // sendSMS(techPhone, "A client has cancelled their appointment. Please check the details.");
+        }
+    </script>
+<script>
+    function sendEmailNotification() {
+        const email = document.getElementById("email").value;
+        const name = document.getElementById("name").value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const service = document.getElementById("service").value;
+
+        const emailBody = `Hello ${name},\n\nYour appointment for a ${service} on ${date} at ${time} has been successfully booked.\n\nThank you!`;
+
+        let mailtoLink = `mailto:${email}?subject=Appointment Confirmation&body=${encodeURIComponent(emailBody)}`;
+        
+        if (email.includes("icloud.com")) {
+            mailtoLink += `&cc=jeremiahvee@icloud.com`;
+        } else if (email.includes("gmail.com")) {
+            mailtoLink += `&cc=jeremiahvee@gmail.com`;
+        } else if (email.includes("outlook.com")) {
+            mailtoLink += `&cc=jeremiahvee@outlook.com`;
+        } else {
+            mailtoLink += `&cc=jeremiahvee@gmail.com,jeremiahvee@icloud.com`;
+        }
+
+        window.location.href = mailtoLink;
+    }
+
+    function sendDefaultNotification() {
+        const myEmail = "jeremiahvee@icloud.com";
+        const myPhone = "0822578119";
+        const emailBody = "A new appointment has been booked. Please check the appointment details.";
+
+        window.location.href = `mailto:${myEmail}?subject=New Appointment Notification&body=${encodeURIComponent(emailBody)}`;
+    }
+
+    document.querySelector("form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        displayMessage("success");
+        sendEmailNotification();
+        sendDefaultNotification();
+    });
+</script>
+</body>
+</html>
